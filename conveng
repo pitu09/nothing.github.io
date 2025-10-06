@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban Kinetic & Noise Energy Harvesting</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F4; /* warm neutral background */
+            color: #1f2937;
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+            position: relative;
+            padding-bottom: 4px;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #0d9488;
+            transition: width 0.3s ease;
+        }
+        .nav-link.active::after, .nav-link:hover::after {
+            width: 100%;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .tech-diagram-layer {
+            transition: all 0.3s ease-in-out;
+            border: 2px solid transparent;
+        }
+        .tech-diagram-layer:hover {
+            transform: scale(1.03);
+            border-color: #0d9488;
+            box-shadow: 0 4px 15px rgba(13, 148, 136, 0.2);
+        }
+        .tech-diagram-layer .layer-info {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 10px;
+            pointer-events: none;
+        }
+        .tech-diagram-layer:hover .layer-info {
+            opacity: 1;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 0px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: #f59e0b;
+            border: 2px solid #F5F5F4;
+        }
+        .timeline-connector {
+            position: absolute;
+            left: -14px;
+            top: 14px;
+            bottom: -14px;
+            width: 2px;
+            background-color: #e5e7eb;
+        }
+    </style>
+</head>
+<body class="bg-stone-100 text-gray-800">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold text-teal-800">
+                Urban Energy Initiative
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#problem" class="nav-link text-gray-600 hover:text-teal-600">The Problem</a>
+                <a href="#solution" class="nav-link text-gray-600 hover:text-teal-600">Our Solution</a>
+                <a href="#impact" class="nav-link text-gray-600 hover:text-teal-600">Impact</a>
+                <a href="#roadmap" class="nav-link text-gray-600 hover:text-teal-600">Roadmap</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="py-20 md:py-32 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-teal-800 leading-tight">Tapping the City's Pulse</h1>
+                <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Harnessing wasted kinetic and noise energy to power a sustainable urban future through an open innovation ecosystem.</p>
+            </div>
+        </section>
+
+        <section id="problem" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-teal-800">The Urban Energy Paradox</h2>
+                    <p class="mt-4 text-gray-600 max-w-2xl mx-auto">Modern cities are hotspots of immense energy consumption, yet they simultaneously waste vast amounts of ambient energy. This section explores the scale of this inefficiency and the urgent need for a smarter, more participatory approach to urban power.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-white p-8 rounded-lg shadow-lg">
+                        <div class="text-5xl font-bold text-amber-500 mb-2">⚡️</div>
+                        <h3 class="text-xl font-semibold mb-2">Escalating Demand</h3>
+                        <p class="text-gray-600">Cities face a burgeoning demand for power to support smart grids, IoT devices, and growing infrastructure, straining traditional energy sources.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-lg">
+                        <div class="text-5xl font-bold text-amber-500 mb-2">👣</div>
+                        <h3 class="text-xl font-semibold mb-2">Wasted Kinetic Energy</h3>
+                        <p class="text-gray-600">Countless daily movements from foot traffic, vehicles, and vibrations represent a massive, untapped source of clean energy dissipated into the environment.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-lg">
+                        <div class="text-5xl font-bold text-amber-500 mb-2"> gaping_hole </div>
+                        <h3 class="text-xl font-semibold mb-2">The Scalability Gap</h3>
+                        <p class="text-gray-600">A critical gap exists for cost-effective, citizen-involved solutions that can convert this latent mechanical energy into usable electrical power at scale.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-teal-800">An Open Innovation Ecosystem</h2>
+                    <p class="mt-4 text-gray-600 max-w-2xl mx-auto">Our solution is a multi-faceted ecosystem that combines advanced technology with a data-driven, crowdsourced strategy. This approach enables the efficient design and deployment of novel kinetic and sound harvesting technologies where they'll have the most impact.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 lg:order-1">
+                        <h3 class="text-2xl font-semibold mb-4 text-teal-700">The Technological Core</h3>
+                        <p class="text-gray-600 mb-6">At the heart of our solution are advanced piezoelectric tiles, transducers, and nanogenerators (PENGs/TENGs). These are engineered for high efficiency and durability to withstand demanding urban conditions. Explore the layers of a typical harvesting tile by hovering over the diagram below.</p>
+                        <div class="space-y-2">
+                             <div class="tech-diagram-layer relative bg-gray-200 p-4 rounded-lg cursor-pointer">
+                                Protective Top Surface
+                                <div class="layer-info bg-gray-800 text-white text-xs rounded py-1 px-2">Durable material to withstand foot/vehicle traffic.</div>
+                            </div>
+                            <div class="tech-diagram-layer relative bg-teal-200 p-4 rounded-lg cursor-pointer">
+                                Piezoelectric Material
+                                <div class="layer-info bg-gray-800 text-white text-xs rounded py-1 px-2">Generates a charge when compressed by pressure.</div>
+                            </div>
+                            <div class="tech-diagram-layer relative bg-gray-300 p-4 rounded-lg cursor-pointer">
+                                Electrode Layer
+                                <div class="layer-info bg-gray-800 text-white text-xs rounded py-1 px-2">Collects and channels the electrical charge.</div>
+                            </div>
+                            <div class="tech-diagram-layer relative bg-gray-700 text-white p-4 rounded-lg cursor-pointer">
+                                Supportive Base
+                                <div class="layer-info bg-gray-800 text-white text-xs rounded py-1 px-2">Provides structural integrity and housing.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-1 lg:order-2">
+                        <h3 class="text-2xl font-semibold mb-4 text-teal-700 text-center">Crowdsourced Intelligence</h3>
+                        <p class="text-gray-600 mb-6 text-center">We use a data-driven approach to identify high-yield energy zones. By mapping urban motion, we can strategically deploy our technology for maximum impact. Select a source below to see its potential contribution.</p>
+                        <div class="chart-container h-80 md:h-96">
+                            <canvas id="energySourceChart"></canvas>
+                        </div>
+                        <div id="source-buttons" class="flex flex-wrap justify-center gap-3 mt-4">
+                            <button data-source="all" class="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition">All Sources</button>
+                            <button data-source="transit" class="bg-white border border-teal-600 text-teal-600 px-4 py-2 rounded-md hover:bg-teal-50 transition">Transit Hubs</button>
+                            <button data-source="sidewalk" class="bg-white border border-teal-600 text-teal-600 px-4 py-2 rounded-md hover:bg-teal-50 transition">Busy Sidewalks</button>
+                            <button data-source="traffic" class="bg-white border border-teal-600 text-teal-600 px-4 py-2 rounded-md hover:bg-teal-50 transition">Vehicular Traffic</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="impact" class="py-16 md:py-24">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-teal-800">Strategic Advantages & Impact</h2>
+                    <p class="mt-4 text-gray-600 max-w-2xl mx-auto">This initiative provides a sustainable energy source while fostering civic participation. This section quantifies the potential output of our system and highlights the environmental, collaborative, and financial benefits of this scalable model.</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4 text-teal-700">Powered by the Community</h3>
+                        <p class="text-gray-600 mb-6">The energy generated can directly power low-voltage systems essential for a smart city. This chart shows the potential energy output from a modest installation of 100 tiles versus the needs of common urban devices.</p>
+                         <div class="chart-container h-80 md:h-96">
+                            <canvas id="impactChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <h4 class="font-semibold text-lg text-teal-700">🌍 Environmental</h4>
+                            <p class="text-gray-600 mt-2">Captures and utilizes otherwise wasted energy, reducing the urban carbon footprint and enhancing overall sustainability.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <h4 class="font-semibold text-lg text-teal-700">🤝 Collaborative</h4>
+                            <p class="text-gray-600 mt-2">Our open innovation model fosters collaboration between public sectors, private companies, academics, and citizens.</p>
+                        </div>
+                         <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <h4 class="font-semibold text-lg text-teal-700">📈 Financial & Scalable</h4>
+                            <p class="text-gray-600 mt-2">Designed for scalable deployment, offering a clear path to economic viability and a tangible return on investment.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-teal-800">Go-To-Market & Next Steps</h2>
+                    <p class="mt-4 text-gray-600 max-w-2xl mx-auto">Our path to implementation is structured in three distinct phases. This timeline outlines our strategic plan, from initial research and development to forming key alliances for city-wide pilot programs. Click on each phase to see the details.</p>
+                </div>
+                <div class="max-w-2xl mx-auto">
+                    <div class="relative pl-8">
+                        <div class="timeline-item mb-12">
+                            <div class="timeline-connector"></div>
+                            <h3 class="font-semibold text-xl mb-2 text-teal-700 cursor-pointer" data-phase="1">Phase 1: R&D and Prototyping</h3>
+                            <div id="phase-1-details" class="phase-details hidden bg-stone-100 p-4 rounded-md">
+                                <p class="text-gray-600">Refine the prototype design for piezoelectric tiles and conduct rigorous performance and durability testing in controlled environments to ensure they meet urban demands.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item mb-12">
+                            <div class="timeline-connector"></div>
+                            <h3 class="font-semibold text-xl mb-2 text-teal-700 cursor-pointer" data-phase="2">Phase 2: Data Collection & Validation</h3>
+                            <div id="phase-2-details" class="phase-details hidden bg-stone-100 p-4 rounded-md">
+                                <p class="text-gray-600">Launch a city-wide motion mapping and data collection initiative. This will validate our platform's efficacy and help identify the most strategic initial deployment sites for pilot installations.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                             <h3 class="font-semibold text-xl mb-2 text-teal-700 cursor-pointer" data-phase="3">Phase 3: Strategic Alliances</h3>
+                            <div id="phase-3-details" class="phase-details hidden bg-stone-100 p-4 rounded-md">
+                                <p class="text-gray-600">Formalize partnerships with key stakeholders, including technology incubators, urban planning commissions, and potential corporate clients to launch comprehensive pilot programs.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-teal-800 text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-2xl font-bold">Join the Urban Energy Revolution</h3>
+            <p class="mt-2 max-w-xl mx-auto">We are seeking partners to help build a more sustainable and participatory energy future. Let's collaborate.</p>
+            <button class="mt-6 bg-amber-500 hover:bg-amber-600 text-teal-900 font-bold py-3 px-6 rounded-lg transition">Get In Touch</button>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.4
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            const sourceData = {
+                all: {
+                    labels: ['Transit Hubs', 'Busy Sidewalks', 'Vehicular Traffic', 'Ambient Noise'],
+                    data: [45, 30, 20, 5],
+                },
+                transit: {
+                    labels: ['Transit Hubs'],
+                    data: [100],
+                },
+                sidewalk: {
+                    labels: ['Busy Sidewalks'],
+                    data: [100],
+                },
+                traffic: {
+                    labels: ['Vehicular Traffic'],
+                    data: [100],
+                },
+            };
+            
+            let energySourceChart;
+            const createEnergySourceChart = (source = 'all') => {
+                const ctx = document.getElementById('energySourceChart').getContext('2d');
+                if (energySourceChart) {
+                    energySourceChart.destroy();
+                }
+                energySourceChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: sourceData[source].labels,
+                        datasets: [{
+                            label: 'Energy Contribution',
+                            data: sourceData[source].data,
+                            backgroundColor: ['#0d9488', '#f59e0b', '#2dd4bf', '#99f6e4'],
+                            borderColor: '#F5F5F4',
+                            borderWidth: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.label}: ${context.raw}%`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            };
+
+            createEnergySourceChart();
+            
+            document.getElementById('source-buttons').addEventListener('click', (e) => {
+                if(e.target.tagName === 'BUTTON') {
+                    const source = e.target.dataset.source;
+                    createEnergySourceChart(source);
+                }
+            });
+
+
+            const impactCtx = document.getElementById('impactChart').getContext('2d');
+            const impactChart = new Chart(impactCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Generated Energy (kWh/day)', 'LED Streetlight', 'Smart Sensor', 'USB Charging Port'],
+                    datasets: [{
+                        label: 'Energy (kWh)',
+                        data: [10, 2.4, 0.2, 1.2],
+                        backgroundColor: ['#0d9488', '#f59e0b', '#f59e0b', '#f59e0b'],
+                        borderColor: ['#047857', '#d97706', '#d97706', '#d97706'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Daily Energy Generation vs. Consumption'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'kWh'
+                            }
+                        }
+                    }
+                }
+            });
+
+            const phaseHeaders = document.querySelectorAll('[data-phase]');
+            phaseHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const phaseNumber = header.dataset.phase;
+                    const details = document.getElementById(`phase-${phaseNumber}-details`);
+                    details.classList.toggle('hidden');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
